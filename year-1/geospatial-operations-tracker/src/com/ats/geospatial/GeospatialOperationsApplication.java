@@ -31,6 +31,21 @@ public class GeospatialOperationsApplication {
             System.out.println("Estimated records: " + estimatedRecordsText);
             System.out.println("Completion percentage: " + wholeCompletionPercent + "%");
             System.out.println("Parsed project count: " + SurveyProjectIntakeParser.getParsedProjectCount());
+
+            // Y1 Day 5.7: ATS-Y1-005 turn normalized intake values into the first SurveyProject domain object
+            SurveyProject project = new SurveyProject("ATS-SURVEY-001", estimatedRecords);
+            Object intakeCandidate = project;
+            SurveyProject acceptedProject = SurveyProjectReferenceService.requireSurveyProject(intakeCandidate);
+
+            System.out.println("Project code: " + acceptedProject.getProjectCode());
+            System.out.println("Records before shared-reference update: " + project.getEstimatedRecords());
+
+            // Y1 Day 5.8: ATS-Y1-005 mutation through a copied object reference affects the same SurveyProject object
+            SurveyProjectReferenceService.addEstimatedRecords(project, 500);
+            System.out.println("Records after shared-reference update: " + project.getEstimatedRecords());
+
+            SurveyProjectReferenceService.tryReplaceProject(project);
+            System.out.println("Caller project after local replacement attempt: " + project.getProjectCode());
         }
 
         System.out.println(startupStatus);
