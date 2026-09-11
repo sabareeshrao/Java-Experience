@@ -1,8 +1,12 @@
 family_id,question,status,primary_year,primary_day,ticket,reinforcement_days
 QF-001-002,"What are the advantages and disadvantages of using Java for Enterprise-level development?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-001-001,"How do you keep up with the continuous evolution of the Java ecosystem?",COMPLETED,Y1,D001,ATS-Y1-001,
+QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,Y1-D002
 QF-002-001,"Which editor are you using?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-007,"Which editor do you use for your current project?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-008,"Do you use Eclipse, IntelliJ, or another IDE?",COMPLETED,Y1,D001,ATS-Y1-001,
-QF-003-004,"What is the role of the JVM in making Java platform-independent?",COMPLETED,Y1,D001,ATS-Y1-001,
-QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,
+QF-003-004,"What is the role of the JVM in making Java platform-independent?",COMPLETED,Y1,D001,ATS-Y1-001,Y1-D002
+QF-003-005,"Can a machine have multiple versions of JDK or JRE installed?",COMPLETED,Y1,D002,ATS-Y1-002,
+QF-003-001,"Can you tell me what JVM is and how it works?",COMPLETED,Y1,D002,ATS-Y1-002,
+QF-003-002,"If you were explaining to new developers how Java code executes, how would you describe the role of JVM in running a simple Java program that prints Hello World?",COMPLETED,Y1,D002,ATS-Y1-002,
+QF-003-003,"Can you tell me the difference between JDK, JRE and JVM?",COMPLETED,Y1,D002,ATS-Y1-002,
