@@ -10,6 +10,10 @@ public class GeospatialOperationsApplication {
         String startupStatus = "Application started successfully.";
 
         System.out.println(applicationName);
+
+        // Y1 Day 2.4: ATS-Y1-002 expose runtime details needed during workstation troubleshooting
+        RuntimeEnvironmentReport.print();
+
         System.out.println(startupStatus);
     }
 }
