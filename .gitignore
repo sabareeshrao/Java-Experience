@@ -1,0 +1,13 @@
+# Y1 Day 1.2: ATS-Y1-001 keep generated Java output and IDE-local files out of source control
+*.class
+out/
+target/
+
+# IDE-local metadata
+.idea/
+*.iml
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
