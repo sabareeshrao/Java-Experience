@@ -20,6 +20,19 @@ public class GeospatialOperationsApplication {
             System.out.println("Startup mode: " + args[0]);
         }
 
+        // Y1 Day 4.8: ATS-Y1-004 normalize spreadsheet-style survey intake values when supplied
+        if (args.length > 1) {
+            String rawEstimatedRecords = args[1];
+            int estimatedRecords = SurveyProjectIntakeParser.parseEstimatedRecords(rawEstimatedRecords);
+            double completionPercent = 87.9;
+            int wholeCompletionPercent = SurveyProjectIntakeParser.toWholeCompletionPercent(completionPercent);
+            String estimatedRecordsText = SurveyProjectIntakeParser.formatEstimatedRecords(estimatedRecords);
+
+            System.out.println("Estimated records: " + estimatedRecordsText);
+            System.out.println("Completion percentage: " + wholeCompletionPercent + "%");
+            System.out.println("Parsed project count: " + SurveyProjectIntakeParser.getParsedProjectCount());
+        }
+
         System.out.println(startupStatus);
     }
 }

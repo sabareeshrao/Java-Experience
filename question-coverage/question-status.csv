@@ -1,7 +1,7 @@
 family_id,question,status,primary_year,primary_day,ticket,reinforcement_days
 QF-001-002,"What are the advantages and disadvantages of using Java for Enterprise-level development?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-001-001,"How do you keep up with the continuous evolution of the Java ecosystem?",COMPLETED,Y1,D001,ATS-Y1-001,
-QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,Y1-D002;Y1-D003
+QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,Y1-D002;Y1-D003;Y1-D004
 QF-002-001,"Which editor are you using?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-007,"Which editor do you use for your current project?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-008,"Do you use Eclipse, IntelliJ, or another IDE?",COMPLETED,Y1,D001,ATS-Y1-001,
@@ -10,9 +10,14 @@ QF-003-005,"Can a machine have multiple versions of JDK or JRE installed?",COMPL
 QF-003-001,"Can you tell me what JVM is and how it works?",COMPLETED,Y1,D002,ATS-Y1-002,Y1-D003
 QF-003-002,"If you were explaining to new developers how Java code executes, how would you describe the role of JVM in running a simple Java program that prints Hello World?",COMPLETED,Y1,D002,ATS-Y1-002,Y1-D003
 QF-003-003,"Can you tell me the difference between JDK, JRE and JVM?",COMPLETED,Y1,D002,ATS-Y1-002,
-QF-004-003,"Can you explain public static void main(String[] args) and why each term is used?",COMPLETED,Y1,D003,ATS-Y1-003,
+QF-004-003,"Can you explain public static void main(String[] args) and why each term is used?",COMPLETED,Y1,D003,ATS-Y1-003,Y1-D004
 QF-004-004,"Can we overload the main() method?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-005,"What will happen if we don't declare the main() method as static?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-001,"Why is the main method public and static?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-002,"Can we override this main method?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-006,"If the main() method is overloaded, can the JVM directly execute the overloaded version?",COMPLETED,Y1,D003,ATS-Y1-003,
+QF-005-003,"What is Type Casting in Java?",COMPLETED,Y1,D004,ATS-Y1-004,
+QF-005-002,"What are static variables?",COMPLETED,Y1,D004,ATS-Y1-004,
+QF-005-007,"How do you convert an Integer to a String and a String to an Integer?",COMPLETED,Y1,D004,ATS-Y1-004,
+QF-005-005,"Can Primitive Data Types be null in Java?",COMPLETED,Y1,D004,ATS-Y1-004,
+QF-005-001,"Can primitive data types store a null value?",COMPLETED,Y1,D004,ATS-Y1-004,

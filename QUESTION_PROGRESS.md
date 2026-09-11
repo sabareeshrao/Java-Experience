@@ -1,48 +1,51 @@
 # QUESTION PROGRESS
 
-## DAY 3 / 500
+## DAY 4 / 500
 
-**DAYS LEFT: 497**
+**DAYS LEFT: 496**
 
 ## Overall coverage
 
 | Metric | Count |
 | --- | ---: |
 | Unique questions in study path | 2008 |
-| Completed | 16 |
+| Completed | 21 |
 | In progress | 1 |
-| Pending | 1991 |
+| Pending | 1986 |
 | Duplicate primary assignments | 0 |
 
-## Day 3 completed questions
+## Day 4 completed questions
 
 | Family ID | Question | Primary coverage | Ticket |
 | --- | --- | --- | --- |
-| QF-004-003 | Can you explain public static void main(String[] args) and why each term is used? | Y1-D003 | ATS-Y1-003 |
-| QF-004-004 | Can we overload the main() method? | Y1-D003 | ATS-Y1-003 |
-| QF-004-005 | What will happen if we don't declare the main() method as static? | Y1-D003 | ATS-Y1-003 |
-| QF-004-001 | Why is the main method public and static? | Y1-D003 | ATS-Y1-003 |
-| QF-004-002 | Can we override this main method? | Y1-D003 | ATS-Y1-003 |
-| QF-004-006 | If the main() method is overloaded, can the JVM directly execute the overloaded version? | Y1-D003 | ATS-Y1-003 |
+| QF-005-003 | What is Type Casting in Java? | Y1-D004 | ATS-Y1-004 |
+| QF-005-002 | What are static variables? | Y1-D004 | ATS-Y1-004 |
+| QF-005-007 | How do you convert an Integer to a String and a String to an Integer? | Y1-D004 | ATS-Y1-004 |
+| QF-005-005 | Can Primitive Data Types be null in Java? | Y1-D004 | ATS-Y1-004 |
+| QF-005-001 | Can primitive data types store a null value? | Y1-D004 | ATS-Y1-004 |
 
 ## Reinforced today
 
 | Family ID | Question | Primary coverage | Reinforcement |
 | --- | --- | --- | --- |
-| QF-003-001 | Can you tell me what JVM is and how it works? | Y1-D002 | Y1-D003 |
-| QF-003-002 | Explain the role of JVM in running a simple Java program | Y1-D002 | Y1-D003 |
-| QF-003-004 | What is the role of the JVM in making Java platform-independent? | Y1-D001 | Y1-D003 |
+| QF-004-003 | Explain `public static void main(String[] args)` | Y1-D003 | Y1-D004 |
 
 ## Still in progress
 
 | Family ID | Question | Started | Reinforcement | Reason not complete yet |
 | --- | --- | --- | --- | --- |
-| QF-002-004 | Can you tell me the tools that you are familiar with while working as a Java developer? | Y1-D001 | Y1-D002;Y1-D003 | The toolset is still intentionally small and will expand through JDBC, MySQL, Tomcat, Maven, Spring, Postman, Linux and later project stages. |
+| QF-002-004 | Can you tell me the tools that you are familiar with while working as a Java developer? | Y1-D001 | Y1-D002;Y1-D003;Y1-D004 | Tooling will keep expanding through JDBC, MySQL, Tomcat, Maven, Spring, Postman, Linux and later stages. |
+
+## Intentionally pending from this module
+
+| Family ID | Question | Why pending |
+| --- | --- | --- |
+| QF-005-006 | Can we declare Pointers in Java? | Better covered when object references enter the project. |
+| QF-005-008 | Why doesn't Java provide explicit Pointers like C or C++? | Better covered with reference semantics and memory safety. |
+| QF-005-004 | Which Exception may be thrown while performing an invalid Type Conversion or Casting? | Better covered with real object casting and `ClassCastException`. |
 
 ## Coverage rules
 
-- Every unique question receives at most one primary completion day.
-- Later appearances are recorded as reinforcement, not another completion.
-- `PENDING` questions are preferred when choosing interview coverage for a new day.
-- A question is not marked complete just because its keyword appeared in code.
-- Year-end audits must have zero missing questions assigned to that year before progressing.
+- One primary completion day per question ID.
+- Later appearances are reinforcement, not duplicate completion.
+- Similar wording variants can share practical evidence while retaining separate IDs.
