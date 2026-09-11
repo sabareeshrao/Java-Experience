@@ -14,6 +14,12 @@ public class GeospatialOperationsApplication {
         // Y1 Day 2.4: ATS-Y1-002 expose runtime details needed during workstation troubleshooting
         RuntimeEnvironmentReport.print();
 
+        // Y1 Day 3.2: ATS-Y1-003 prove that launcher arguments arrive through String[] args
+        System.out.println("Startup argument count: " + args.length);
+        if (args.length > 0) {
+            System.out.println("Startup mode: " + args[0]);
+        }
+
         System.out.println(startupStatus);
     }
 }

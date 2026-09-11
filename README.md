@@ -1,8 +1,8 @@
 # Java Experience
 
-## DAY 2 / 500
+## DAY 3 / 500
 
-**DAYS LEFT: 498**
+**DAYS LEFT: 497**
 
 This repository is a five-year hands-on Java experience reconstruction. Each development day starts from the latest verified remote commit, solves one realistic engineering problem, records the engineering discussion and implementation order, updates interview-question coverage, then commits and verifies the result.
 
@@ -11,12 +11,12 @@ This repository is a five-year hands-on Java experience reconstruction. Each dev
 - Career year: **Year 1 / 5**
 - Role: **Java Software Development Intern**
 - Project: **Geospatial Operations Tracking System**
-- Current ticket: **ATS-Y1-002**
+- Current ticket: **ATS-Y1-003**
 - Reference repository under focus: **samuelchibuike/ServletJspCRUDProject**
 - Total development days: **500**
-- Current development day: **2**
-- Days remaining after Day 2: **498**
-- Day 2 predecessor: **9fc9007574bbebcc136ee00ae097d5e869743760**
+- Current development day: **3**
+- Days remaining after Day 3: **497**
+- Day 3 predecessor: **fd082db7a09460c3dbb78ede34d8ccb2da387d53**
 
 ## Five-year build
 
@@ -43,4 +43,12 @@ This repository is a five-year hands-on Java experience reconstruction. Each dev
 
 Question progress is tracked in `QUESTION_PROGRESS.md` and `question-coverage/question-status.csv`.
 
-The source question catalog contains **2,008** unique study-path questions. The CSV records questions once they become completed or in progress; questions not yet listed there remain pending. A concept may be reinforced on later days, but it receives only one primary completion day.
+Current status after Day 3:
+
+- Unique study-path questions: **2,008**
+- Completed: **16**
+- In progress: **1**
+- Pending: **1,991**
+- Duplicate primary assignments: **0**
+
+A concept may be reinforced later, but it receives only one primary completion day.
