@@ -1,40 +1,39 @@
 # QUESTION PROGRESS
 
-## DAY 5 / 500
+## DAY 6 / 500
 
-**DAYS LEFT: 495**
+**DAYS LEFT: 494**
 
 ## Overall coverage
 
 | Metric | Count |
 | --- | ---: |
 | Unique questions in study path | 2008 |
-| Completed | 26 |
+| Completed | 30 |
 | In progress | 1 |
-| Pending | 1981 |
+| Pending | 1977 |
 | Duplicate primary assignments | 0 |
 
-## Day 5 completed questions
+## Day 6 completed questions
 
 | Family ID | Question | Primary coverage | Ticket |
 | --- | --- | --- | --- |
-| QF-005-006 | Can we declare Pointers in Java? | Y1-D005 | ATS-Y1-005 |
-| QF-005-008 | Why doesn't Java provide explicit Pointers like C or C++? | Y1-D005 | ATS-Y1-005 |
-| QF-005-004 | Which Exception may be thrown while performing an invalid Type Conversion or Casting? | Y1-D005 | ATS-Y1-005 |
-| QF-006-001 | What is the purpose of the instanceof Operator? | Y1-D005 | ATS-Y1-005 |
-| QF-008-004 | Do you know the meaning of Pass by Value and Pass by Reference in Java? | Y1-D005 | ATS-Y1-005 |
+| QF-008-002 | Do you know about System.exit() in Java? | Y1-D006 | ATS-Y1-006 |
+| QF-008-003 | What happens internally when System.exit() is called? | Y1-D006 | ATS-Y1-006 |
+| QF-008-005 | Did you get a chance to use System.exit() in your project? | Y1-D006 | ATS-Y1-006 |
+| QF-008-001 | Can you tell me your project methodology? Is it based on Agile or Waterfall model? | Y1-D006 | ATS-Y1-006 |
 
 ## Reinforced today
 
 | Family ID | Question | Primary coverage | Reinforcement |
 | --- | --- | --- | --- |
-| QF-005-003 | What is Type Casting in Java? | Y1-D004 | Y1-D005 |
+| QF-004-003 | Can you explain public static void main(String[] args) and why each term is used? | Y1-D003 | Y1-D006 |
 
 ## Still in progress
 
 | Family ID | Question | Started | Reinforcement | Reason not complete yet |
 | --- | --- | --- | --- | --- |
-| QF-002-004 | Can you tell me the tools that you are familiar with while working as a Java developer? | Y1-D001 | Y1-D002;Y1-D003;Y1-D004;Y1-D005 | Tooling will keep expanding through JDBC, MySQL, Tomcat, Maven, Spring, Postman, Linux and later stages. |
+| QF-002-004 | Can you tell me the tools that you are familiar with while working as a Java developer? | Y1-D001 | Y1-D002;Y1-D003;Y1-D004;Y1-D005;Y1-D006 | Tooling will keep expanding through JDBC, MySQL, Tomcat, Maven, Spring, Postman, Linux and later stages. |
 
 ## Coverage rules
 

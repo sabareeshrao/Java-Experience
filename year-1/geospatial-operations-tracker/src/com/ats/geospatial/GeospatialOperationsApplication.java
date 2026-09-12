@@ -20,10 +20,28 @@ public class GeospatialOperationsApplication {
             System.out.println("Startup mode: " + args[0]);
         }
 
+        // Y1 Day 6.3: ATS-Y1-006 scheduled survey imports must fail explicitly when required input is missing
+        boolean surveyImportMode = args.length > 0 && "survey-import".equals(args[0]);
+        if (surveyImportMode && args.length < 2) {
+            System.err.println("Startup validation failed: survey-import requires an estimated record count.");
+            System.exit(ApplicationExitCodes.MISSING_REQUIRED_ARGUMENT);
+            return;
+        }
+
         // Y1 Day 4.8: ATS-Y1-004 normalize spreadsheet-style survey intake values when supplied
-        if (args.length > 1) {
+        if (surveyImportMode) {
             String rawEstimatedRecords = args[1];
-            int estimatedRecords = SurveyProjectIntakeParser.parseEstimatedRecords(rawEstimatedRecords);
+            int estimatedRecords;
+
+            // Y1 Day 6.4: ATS-Y1-006 convert raw parsing failure into a predictable process exit status
+            try {
+                estimatedRecords = SurveyProjectIntakeParser.parseEstimatedRecords(rawEstimatedRecords);
+            } catch (NumberFormatException exception) {
+                System.err.println("Startup validation failed: estimated record count must be a whole number.");
+                System.exit(ApplicationExitCodes.INVALID_RECORD_COUNT);
+                return;
+            }
+
             double completionPercent = 87.9;
             int wholeCompletionPercent = SurveyProjectIntakeParser.toWholeCompletionPercent(completionPercent);
             String estimatedRecordsText = SurveyProjectIntakeParser.formatEstimatedRecords(estimatedRecords);
@@ -48,6 +66,7 @@ public class GeospatialOperationsApplication {
             System.out.println("Caller project after local replacement attempt: " + project.getProjectCode());
         }
 
+        // Y1 Day 6.5: ATS-Y1-006 successful commands terminate naturally with process status 0
         System.out.println(startupStatus);
     }
 }

@@ -1,7 +1,7 @@
 family_id,question,status,primary_year,primary_day,ticket,reinforcement_days
 QF-001-002,"What are the advantages and disadvantages of using Java for Enterprise-level development?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-001-001,"How do you keep up with the continuous evolution of the Java ecosystem?",COMPLETED,Y1,D001,ATS-Y1-001,
-QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,Y1-D002;Y1-D003;Y1-D004;Y1-D005
+QF-002-004,"Can you tell me the tools that you are familiar with while working as a Java developer?",IN_PROGRESS,Y1,D001,ATS-Y1-001,Y1-D002;Y1-D003;Y1-D004;Y1-D005;Y1-D006
 QF-002-001,"Which editor are you using?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-007,"Which editor do you use for your current project?",COMPLETED,Y1,D001,ATS-Y1-001,
 QF-002-008,"Do you use Eclipse, IntelliJ, or another IDE?",COMPLETED,Y1,D001,ATS-Y1-001,
@@ -10,7 +10,7 @@ QF-003-005,"Can a machine have multiple versions of JDK or JRE installed?",COMPL
 QF-003-001,"Can you tell me what JVM is and how it works?",COMPLETED,Y1,D002,ATS-Y1-002,Y1-D003
 QF-003-002,"If you were explaining to new developers how Java code executes, how would you describe the role of JVM in running a simple Java program that prints Hello World?",COMPLETED,Y1,D002,ATS-Y1-002,Y1-D003
 QF-003-003,"Can you tell me the difference between JDK, JRE and JVM?",COMPLETED,Y1,D002,ATS-Y1-002,
-QF-004-003,"Can you explain public static void main(String[] args) and why each term is used?",COMPLETED,Y1,D003,ATS-Y1-003,Y1-D004
+QF-004-003,"Can you explain public static void main(String[] args) and why each term is used?",COMPLETED,Y1,D003,ATS-Y1-003,Y1-D004;Y1-D006
 QF-004-004,"Can we overload the main() method?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-005,"What will happen if we don't declare the main() method as static?",COMPLETED,Y1,D003,ATS-Y1-003,
 QF-004-001,"Why is the main method public and static?",COMPLETED,Y1,D003,ATS-Y1-003,
@@ -26,3 +26,7 @@ QF-005-008,"Why doesn't Java provide explicit Pointers like C or C++?",COMPLETED
 QF-005-004,"Which Exception may be thrown while performing an invalid Type Conversion or Casting?",COMPLETED,Y1,D005,ATS-Y1-005,
 QF-006-001,"What is the purpose of the instanceof Operator?",COMPLETED,Y1,D005,ATS-Y1-005,
 QF-008-004,"Do you know the meaning of Pass by Value and Pass by Reference in Java?",COMPLETED,Y1,D005,ATS-Y1-005,
+QF-008-002,"Do you know about System.exit() in Java?",COMPLETED,Y1,D006,ATS-Y1-006,
+QF-008-003,"What happens internally when System.exit() is called?",COMPLETED,Y1,D006,ATS-Y1-006,
+QF-008-005,"Did you get a chance to use System.exit() in your project?",COMPLETED,Y1,D006,ATS-Y1-006,
+QF-008-001,"Can you tell me your project methodology? Is it based on Agile or Waterfall model?",COMPLETED,Y1,D006,ATS-Y1-006,
