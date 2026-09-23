@@ -6,7 +6,7 @@
   "steps": [
     {
       "title": "Day 2.1 Verify Day 1 remote SHA and read existing source",
-      "why": "Start from the verified Day 1 handoff instead of recreating the application.",
+      "why": "Start Day 2 by verifying the exact Day 1 handoff and reading the existing application before making changes. The rule for the entire 500-day experience is to extend yesterday's working repository with today's requirement, not rebuild the same files again.",
       "software": "github",
       "action": {
         "action": "openCommit",
@@ -17,43 +17,44 @@
     },
     {
       "title": "Day 2.2 Add non-instantiable RuntimeEnvironmentReport utility",
-      "why": "Create a focused utility class for runtime diagnostics without allowing unnecessary object instances.",
-      "software": "eclipse",
+      "why": "Create a small runtime-reporting utility because another developer may see different Java versions between the IDE and terminal. The utility belongs in the existing project and should have one focused responsibility: expose the environment in which the application is actually running.",
+      "software": "intellij",
       "action": {
-        "action": "createJavaFile",
+        "action": "createFile",
         "data": {
           "path": "src/com/ats/geospatial/RuntimeEnvironmentReport.java",
+          "language": "java",
           "content": "package com.ats.geospatial;\\n\\npublic final class RuntimeEnvironmentReport {\\n    private RuntimeEnvironmentReport() {}\\n    public static void print() {}\\n}\\n"
         }
       }
     },
     {
       "title": "Day 2.3 Read Java runtime and JVM identity from system properties",
-      "why": "Expose the active Java version, runtime, JVM, vendor, and OS using standard system properties.",
-      "software": "eclipse",
+      "why": "Read the active Java version, runtime, virtual machine, vendor, and operating system from the running process. This turns JDK, runtime, and JVM terminology into something observable during troubleshooting instead of something memorized only for interviews.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/RuntimeEnvironmentReport.java",
-          "content": "package com.ats.geospatial;\n\npublic final class RuntimeEnvironmentReport {\n    private RuntimeEnvironmentReport() {}\n\n    public static void print() {\n        System.out.println(\"Java version: \" + System.getProperty(\"java.version\"));\n        System.out.println(\"Java runtime: \" + System.getProperty(\"java.runtime.name\"));\n        System.out.println(\"JVM: \" + System.getProperty(\"java.vm.name\"));\n        System.out.println(\"Java vendor: \" + System.getProperty(\"java.vendor\"));\n        System.out.println(\"Operating system: \" + System.getProperty(\"os.name\"));\n    }\n}"
+          "file": "src/com/ats/geospatial/RuntimeEnvironmentReport.java",
+          "code": "package com.ats.geospatial;\n\npublic final class RuntimeEnvironmentReport {\n    private RuntimeEnvironmentReport() {}\n\n    public static void print() {\n        System.out.println(\"Java version: \" + System.getProperty(\"java.version\"));\n        System.out.println(\"Java runtime: \" + System.getProperty(\"java.runtime.name\"));\n        System.out.println(\"JVM: \" + System.getProperty(\"java.vm.name\"));\n        System.out.println(\"Java vendor: \" + System.getProperty(\"java.vendor\"));\n        System.out.println(\"Operating system: \" + System.getProperty(\"os.name\"));\n    }\n}"
         }
       }
     },
     {
       "title": "Day 2.4 Invoke runtime diagnostics from the existing main method",
-      "why": "Extend the existing Day 1 main method rather than creating a second application entry point.",
-      "software": "eclipse",
+      "why": "Integrate the runtime report into the existing application startup flow. Day 1 behavior stays in place; Day 2 adds only the diagnostic capability required for workstation and environment troubleshooting.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
-          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        RuntimeEnvironmentReport.print();\n        System.out.println(startupStatus);\n    }\n}"
+          "file": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "code": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        RuntimeEnvironmentReport.print();\n        System.out.println(startupStatus);\n    }\n}"
         }
       }
     },
     {
       "title": "Day 2.5 Compile both classes with Java 8 target compatibility",
-      "why": "Compile the existing application and the new diagnostic utility together using the Java 8 target.",
+      "why": "Compile the expanded application with the same Java 8 target used on Day 1. The goal is to prove that adding runtime diagnostics has not changed the project's compatibility contract.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -66,7 +67,7 @@
     },
     {
       "title": "Day 2.6 Run the application and inspect the active runtime",
-      "why": "Use the runtime report to distinguish the project's Java 8 target from the workstation JVM executing the class.",
+      "why": "Run the application and inspect the environment information it reports. This demonstrates that the Java version used to execute the program can differ from the class-file target, which is a realistic source of confusion on developer machines.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -79,18 +80,20 @@
     },
     {
       "title": "Day 2.7 Inspect generated bytecode with javap",
-      "why": "Verify class-file version 52 and inspect the compiled call into RuntimeEnvironmentReport.",
-      "software": "eclipse",
+      "why": "Inspect the compiled class information and confirm the Java 8 class-file version. Also verify that the application really contains the call to the runtime-reporting utility, connecting the source change to the generated bytecode.",
+      "software": "powershell",
       "action": {
-        "action": "showBytecode",
+        "action": "runCommand",
         "data": {
-          "output": "javap -verbose GeospatialOperationsApplication\\nmajor version: 52\\n\\ninvokestatic RuntimeEnvironmentReport.print"
+          "command": "javap -classpath out -verbose com.ats.geospatial.GeospatialOperationsApplication",
+          "output": "javap -verbose GeospatialOperationsApplication\\nmajor version: 52\\n\\ninvokestatic RuntimeEnvironmentReport.print",
+          "exitCode": 0
         }
       }
     },
     {
       "title": "Day 2.8 Update question coverage without duplicating Day 1",
-      "why": "Record newly practiced JVM/JDK/JRE questions while treating Day 1 JVM material only as reinforcement.",
+      "why": "Update question coverage based on what Day 2 actually exercised. New JDK, runtime, and JVM questions can receive primary coverage, while concepts already completed on Day 1 should be recorded only as reinforcement.",
       "software": "github",
       "action": {
         "action": "openFile",
@@ -101,7 +104,7 @@
     },
     {
       "title": "Day 2.9 Push and verify remote main",
-      "why": "Close Day 2 at the exact verified handoff commit used by Day 3.",
+      "why": "Push and verify the completed Day 2 state on GitHub. This verified remote commit is the only valid starting point for Day 3 and preserves continuity across the experience.",
       "software": "github",
       "action": {
         "action": "openCommit",

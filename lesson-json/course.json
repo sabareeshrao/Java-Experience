@@ -13,12 +13,6 @@
   ],
   "package": {
     "apps": {
-      "eclipse": {
-        "workspace": "Java-Experience",
-        "project": "geospatial-operations-tracker",
-        "files": {},
-        "openFile": ""
-      },
       "powershell": {
         "cwd": "C:\\Java-Experience\\year-1\\geospatial-operations-tracker",
         "history": [],
@@ -105,6 +99,31 @@
             ]
           }
         ]
+      },
+      "intellij_idea": {
+        "project": {
+          "name": "geospatial-operations-tracker",
+          "sdk": "Java 8",
+          "languageLevel": "8"
+        },
+        "tree": [],
+        "files": {},
+        "problems": [],
+        "breakpoints": [],
+        "runConfigurations": [],
+        "maven": {},
+        "spring": {},
+        "jpa": {},
+        "git": {
+          "branch": "main",
+          "changes": [],
+          "history": []
+        },
+        "database": {},
+        "tests": {},
+        "terminal": "",
+        "console": "",
+        "visibleFeatures": []
       }
     }
   },

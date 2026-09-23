@@ -6,7 +6,7 @@
   "steps": [
     {
       "title": "Day 1.1 Verify Java-Experience is empty",
-      "why": "Confirm the remote starts from a genuine empty project state before any Java source is introduced.",
+      "why": "Before coding, verify the Java-Experience repository and confirm the expected starting state. The purpose is to prove that this experience is being built from the real remote repository instead of importing a finished application. Only after the starting point is confirmed should the first project work begin.",
       "software": "github",
       "action": {
         "action": "openRepository",
@@ -17,54 +17,59 @@
     },
     {
       "title": "Day 1.2 Define Year 1 project and package structure",
-      "why": "Establish the geospatial-operations-tracker project and com.ats.geospatial package before adding application behavior.",
-      "software": "eclipse",
+      "why": "Establish the Year 1 project structure that will hold the Geospatial Operations Tracking System. Keep the structure deliberately small because Maven, databases, Spring, and other enterprise tools have not become necessary yet. This gives every later addition a visible reason to exist.",
+      "software": "intellij",
       "action": {
         "action": "openProject",
         "data": {
-          "project": "geospatial-operations-tracker"
+          "project": {
+            "name": "geospatial-operations-tracker",
+            "sdk": "Java 8",
+            "languageLevel": "8"
+          }
         }
       }
     },
     {
       "title": "Day 1.3 Create GeospatialOperationsApplication",
-      "why": "Create the first Java source file in the Year 1 project rather than importing a finished application.",
-      "software": "eclipse",
+      "why": "Create the first Java application class inside the project. This is the first real source file of the experience, so the goal is simply to establish a genuine Java application rather than jump ahead to frameworks or generated project templates.",
+      "software": "intellij",
       "action": {
-        "action": "createJavaFile",
+        "action": "createFile",
         "data": {
           "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "language": "java",
           "content": "package com.ats.geospatial;\\n\\npublic class GeospatialOperationsApplication {\\n}\\n"
         }
       }
     },
     {
       "title": "Day 1.4 Establish the main application entry point",
-      "why": "Add public static void main(String[] args) so the JVM launcher has the standard entry point.",
-      "software": "eclipse",
+      "why": "Give the application a valid starting point that the Java launcher can execute. At this stage we are only establishing where execution begins; the deeper interview questions about launcher behavior will be tested on a later day when the project creates that need.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
-          "content": "package com.ats.geospatial;\\n\\npublic class GeospatialOperationsApplication {\\n    public static void main(String[] args) {\\n    }\\n}\\n"
+          "file": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "code": "package com.ats.geospatial;\\n\\npublic class GeospatialOperationsApplication {\\n    public static void main(String[] args) {\\n    }\\n}\\n"
         }
       }
     },
     {
       "title": "Day 1.5 Add visible startup verification",
-      "why": "Print the application name and startup status so the first runnable build has an observable acceptance result.",
-      "software": "eclipse",
+      "why": "Make application startup visible to the developer and QA. The program should identify the Geospatial Operations Tracking System and clearly confirm that startup completed, giving Day 1 a simple observable acceptance result.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
-          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        System.out.println(startupStatus);\n    }\n}"
+          "file": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "code": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        System.out.println(startupStatus);\n    }\n}"
         }
       }
     },
     {
       "title": "Day 1.6 Compile as Java 8-compatible source",
-      "why": "Compile explicitly with a Java 8 target before later build tools hide the compiler command.",
+      "why": "Compile the source with Java 8 compatibility so the early-career project has an explicit technical target. This confirms that nothing introduced on Day 1 depends on newer Java syntax and keeps the project consistent with the intended Year 1 environment.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -77,7 +82,7 @@
     },
     {
       "title": "Day 1.7 Run the application and verify console output",
-      "why": "Execute the compiled class and verify the exact startup output from the first application.",
+      "why": "Run the compiled application and verify that the startup messages actually appear. This proves Day 1 is working software, not documentation-only progress, and gives QA a concrete result to accept before moving forward.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -90,7 +95,7 @@
     },
     {
       "title": "Day 1.8 Initialize question coverage tracking",
-      "why": "Open the repository question-progress file so interview coverage is tied to completed engineering work.",
+      "why": "Initialize interview-question tracking only after real project work has occurred. Questions completed today should be tied to what was genuinely practiced, while broader tool-experience questions remain in progress until the project naturally introduces more technologies.",
       "software": "github",
       "action": {
         "action": "openFile",
@@ -101,7 +106,7 @@
     },
     {
       "title": "Day 1.9 Commit, push, and verify remote state",
-      "why": "Finish Day 1 only after the implementation is represented by the verified remote handoff commit.",
+      "why": "Finish the day by verifying the implementation on GitHub. The remote commit becomes the handoff point for Day 2, so future work must continue from this exact state instead of recreating the project.",
       "software": "github",
       "action": {
         "action": "openCommit",

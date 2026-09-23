@@ -6,7 +6,7 @@
   "steps": [
     {
       "title": "Day 5.1 Verify Day 4 remote state",
-      "why": "Start from the normalized intake build so the new object model grows from working code.",
+      "why": "Verify the Day 4 remote state before introducing the first real domain object. The normalized survey values already exist, and Day 5 should build on them rather than restart the intake flow.",
       "software": "github",
       "action": {
         "action": "openCommit",
@@ -17,78 +17,82 @@
     },
     {
       "title": "Day 5.2 Create first SurveyProject domain object",
-      "why": "Keep project code and estimated-record count together in one domain object.",
-      "software": "eclipse",
+      "why": "Create the SurveyProject domain object so the project code and estimated-record count belong to one meaningful business record. This is the point where disconnected variables begin turning into an actual application model.",
+      "software": "intellij",
       "action": {
-        "action": "createJavaFile",
+        "action": "createFile",
         "data": {
           "path": "src/com/ats/geospatial/SurveyProject.java",
+          "language": "java",
           "content": "package com.ats.geospatial;\n\npublic class SurveyProject {\n    private String projectCode;\n    private int estimatedRecords;\n\n    public SurveyProject(String projectCode, int estimatedRecords) {\n        this.projectCode = projectCode;\n        this.estimatedRecords = estimatedRecords;\n    }\n\n    public String getProjectCode() { return projectCode; }\n    public int getEstimatedRecords() { return estimatedRecords; }\n    public void setEstimatedRecords(int estimatedRecords) { this.estimatedRecords = estimatedRecords; }\n}"
         }
       }
     },
     {
       "title": "Day 5.3 Add reference-semantics service",
-      "why": "Create a small service where object-reference behavior can be exercised through real project operations.",
-      "software": "eclipse",
+      "why": "Add a small reference-semantics service so object-reference behavior can be exercised through project operations. The service exists to create realistic mutation and parameter-passing scenarios around SurveyProject.",
+      "software": "intellij",
       "action": {
-        "action": "createJavaFile",
+        "action": "createFile",
         "data": {
           "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "language": "java",
           "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectReferenceService {\\n    private SurveyProjectReferenceService() {}\\n}\\n"
         }
       }
     },
     {
       "title": "Day 5.4 Mutate object through copied reference",
-      "why": "Show that a copied Java reference still reaches the same SurveyProject object and can mutate its state.",
-      "software": "eclipse",
+      "why": "Pass the SurveyProject into a method and mutate the object through the copied reference. The important observation is that both references still reach the same object, so the caller can see the changed state.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
-          "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectReferenceService {\\n    private SurveyProjectReferenceService() {}\\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\\n    }\\n}\\n"
+          "file": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "code": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectReferenceService {\\n    private SurveyProjectReferenceService() {}\\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\\n    }\\n}\\n"
         }
       }
     },
     {
       "title": "Day 5.5 Prove parameter reassignment does not replace caller reference",
-      "why": "Reassign only the local parameter and observe that the caller continues referencing the original SurveyProject.",
-      "software": "eclipse",
+      "why": "Reassign the method parameter to a different SurveyProject and compare it with the caller's reference afterward. This demonstrates that changing the local parameter reference does not replace the reference held by the caller.",
+      "software": "intellij",
       "action": {
-        "action": "setFileContent",
+        "action": "setCode",
         "data": {
-          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
-          "content": "package com.ats.geospatial;\n\npublic final class SurveyProjectReferenceService {\n    private SurveyProjectReferenceService() {}\n\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\n    }\n\n    public static void tryReplaceProject(SurveyProject project) {\n        project = new SurveyProject(\"LOCAL-REPLACEMENT\", 0);\n        System.out.println(\"Inside replacement project: \" + project.getProjectCode());\n    }\n\n    public static SurveyProject requireSurveyProject(Object candidate) {\n        if (!(candidate instanceof SurveyProject)) {\n            throw new IllegalArgumentException(\"Expected SurveyProject\");\n        }\n        return (SurveyProject) candidate;\n    }\n}"
+          "file": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "code": "package com.ats.geospatial;\n\npublic final class SurveyProjectReferenceService {\n    private SurveyProjectReferenceService() {}\n\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\n    }\n\n    public static void tryReplaceProject(SurveyProject project) {\n        project = new SurveyProject(\"LOCAL-REPLACEMENT\", 0);\n        System.out.println(\"Inside replacement project: \" + project.getProjectCode());\n    }\n\n    public static SurveyProject requireSurveyProject(Object candidate) {\n        if (!(candidate instanceof SurveyProject)) {\n            throw new IllegalArgumentException(\"Expected SurveyProject\");\n        }\n        return (SurveyProject) candidate;\n    }\n}"
         }
       }
     },
     {
       "title": "Day 5.6 Guard generic intake with instanceof",
-      "why": "Check an Object before narrowing it to SurveyProject so an invalid candidate is rejected deliberately.",
-      "software": "eclipse",
+      "why": "Guard a generic object before narrowing it to SurveyProject. The check gives the application a deliberate way to reject the wrong type and connects type checking to a realistic intake boundary.",
+      "software": "intellij",
       "action": {
         "action": "openFile",
         "data": {
-          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java"
+          "file": "src/com/ats/geospatial/SurveyProjectReferenceService.java"
         }
       }
     },
     {
       "title": "Day 5.7 Integrate SurveyProject into existing application",
-      "why": "Create the project object from normalized intake and exercise mutation and local-reference replacement in the running application.",
-      "software": "eclipse",
+      "why": "Integrate SurveyProject into the existing survey-import path. The application should now build a domain object from the normalized values and use the reference service as part of the same evolving flow.",
+      "software": "intellij",
       "action": {
-        "action": "appendFileContent",
+        "action": "typeCode",
         "data": {
-          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
-          "content": "\\n// Day 5 integration: create SurveyProject and exercise SurveyProjectReferenceService.\\n"
+          "file": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "position": "end",
+          "code": "\\n// Day 5 integration: create SurveyProject and exercise SurveyProjectReferenceService.\\n",
+          "boundary": false
         }
       }
     },
     {
       "title": "Day 5.8 Reproduce invalid cast and ClassCastException",
-      "why": "Run an intentionally invalid Object-to-SurveyProject cast to see the runtime exception that instanceof is protecting against.",
+      "why": "Run a controlled invalid-cast experiment and observe the runtime failure. This provides concrete evidence for why the type check exists, while keeping the intentionally broken experiment out of committed production code.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -101,7 +105,7 @@
     },
     {
       "title": "Day 5.9 Compile/run and verify Java 8 bytecode",
-      "why": "Execute the real reference-semantics flow and retain Java 8 compatibility.",
+      "why": "Compile and run the complete Day 5 flow while preserving Java 8 compatibility. Verify both shared-object mutation and local parameter reassignment without regressing the earlier startup and intake behavior.",
       "software": "powershell",
       "action": {
         "action": "runCommand",
@@ -114,7 +118,7 @@
     },
     {
       "title": "Day 5.10 Update coverage, push, and verify",
-      "why": "Close the object-reference day at the exact commit Day 6 will inherit.",
+      "why": "Update question coverage and verify the final Day 5 GitHub commit. The resulting remote state becomes the exact predecessor for the process-exit work on Day 6.",
       "software": "github",
       "action": {
         "action": "openCommit",
