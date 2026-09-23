@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "id": "chapter-01",
+  "title": "Day 1 / 500 — ATS-Y1-001 Initialize the Geospatial Operations Tracking System",
+  "subtitle": "Year 1 · Java Software Development Intern · Geospatial Operations Tracking System",
+  "steps": [
+    {
+      "title": "Day 1.1 Verify Java-Experience is empty",
+      "why": "Confirm the remote starts from a genuine empty project state before any Java source is introduced.",
+      "software": "github",
+      "action": {
+        "action": "openRepository",
+        "data": {
+          "name": "Java-Experience"
+        }
+      }
+    },
+    {
+      "title": "Day 1.2 Define Year 1 project and package structure",
+      "why": "Establish the geospatial-operations-tracker project and com.ats.geospatial package before adding application behavior.",
+      "software": "eclipse",
+      "action": {
+        "action": "openProject",
+        "data": {
+          "project": "geospatial-operations-tracker"
+        }
+      }
+    },
+    {
+      "title": "Day 1.3 Create GeospatialOperationsApplication",
+      "why": "Create the first Java source file in the Year 1 project rather than importing a finished application.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\\n\\npublic class GeospatialOperationsApplication {\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 1.4 Establish the main application entry point",
+      "why": "Add public static void main(String[] args) so the JVM launcher has the standard entry point.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\\n\\npublic class GeospatialOperationsApplication {\\n    public static void main(String[] args) {\\n    }\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 1.5 Add visible startup verification",
+      "why": "Print the application name and startup status so the first runnable build has an observable acceptance result.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        System.out.println(startupStatus);\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 1.6 Compile as Java 8-compatible source",
+      "why": "Compile explicitly with a Java 8 target before later build tools hide the compiler command.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "javac --release 8 -d out src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "output": "Compilation succeeded.",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 1.7 Run the application and verify console output",
+      "why": "Execute the compiled class and verify the exact startup output from the first application.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "java -cp out com.ats.geospatial.GeospatialOperationsApplication",
+          "output": "Geospatial Operations Tracking System\\nApplication started successfully.",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 1.8 Initialize question coverage tracking",
+      "why": "Open the repository question-progress file so interview coverage is tied to completed engineering work.",
+      "software": "github",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "QUESTION_PROGRESS.md"
+        }
+      }
+    },
+    {
+      "title": "Day 1.9 Commit, push, and verify remote state",
+      "why": "Finish Day 1 only after the implementation is represented by the verified remote handoff commit.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "9fc9007574bbebcc136ee00ae097d5e869743760"
+        }
+      }
+    }
+  ]
+}

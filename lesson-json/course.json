@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "title": "Java Experience — Year 1",
+  "subtitle": "Five-year Java experience reconstruction · Year 1 currently through Day 6 / 500",
+  "books": [
+    {
+      "id": "year-1",
+      "title": "Year 1 — Java Software Development Intern",
+      "subtitle": "Geospatial Operations Tracking System",
+      "chapterStart": 1,
+      "chapterEnd": 6
+    }
+  ],
+  "package": {
+    "apps": {
+      "eclipse": {
+        "workspace": "Java-Experience",
+        "project": "geospatial-operations-tracker",
+        "files": {},
+        "openFile": ""
+      },
+      "powershell": {
+        "cwd": "C:\\Java-Experience\\year-1\\geospatial-operations-tracker",
+        "history": [],
+        "output": "",
+        "exitCode": 0
+      },
+      "github": {
+        "user": "sabareeshrao",
+        "displayName": "sabareeshrao",
+        "activeRepo": "Java-Experience",
+        "repositories": [
+          {
+            "name": "Java-Experience",
+            "owner": "sabareeshrao",
+            "defaultBranch": "main",
+            "stars": 0,
+            "watchers": 0,
+            "forks": 0,
+            "branches": [
+              {
+                "name": "main"
+              }
+            ],
+            "tags": [],
+            "releases": [],
+            "issues": [],
+            "pullRequests": [],
+            "discussions": [],
+            "projects": [],
+            "security": {},
+            "insights": {},
+            "settings": {},
+            "files": [
+              {
+                "path": "README.md",
+                "content": "# Java Experience\\n\\nDAY 6 / 500"
+              },
+              {
+                "path": "QUESTION_PROGRESS.md",
+                "content": "# QUESTION PROGRESS\\n\\nCompleted: 30 / 2008\\nIn progress: 1\\nPending: 1977"
+              },
+              {
+                "path": "docs/development-journal/Y1-D006.md",
+                "content": "# Year 1 Day 6 — ATS-Y1-006 Enforce Survey Import Exit Codes"
+              }
+            ],
+            "commits": [
+              {
+                "hash": "9fde1e1b71746ea2d403a48bd2a19c6baca0722c",
+                "message": "ATS-Y1-006 Enforce survey import exit codes",
+                "author": "sabareeshrao",
+                "date": "2026-09-12"
+              },
+              {
+                "hash": "324878b5c61fcf4331a8621161e3cbc193762991",
+                "message": "ATS-Y1-005 Complete Day 5 SurveyProject reference semantics",
+                "author": "sabareeshrao",
+                "date": "2026-09-11"
+              },
+              {
+                "hash": "da17e2ceed98d55c2f88cab04c97631efe48ba9b",
+                "message": "ATS-Y1-004 Normalize survey project intake values",
+                "author": "sabareeshrao",
+                "date": "2026-09-11"
+              },
+              {
+                "hash": "fe3d9e4c7bdf75ef0e04aea2f462c77d9a98accd",
+                "message": "ATS-Y1-003 Verify Java main method launcher contract",
+                "author": "sabareeshrao",
+                "date": "2026-09-11"
+              },
+              {
+                "hash": "fd082db7a09460c3dbb78ede34d8ccb2da387d53",
+                "message": "ATS-Y1-002 Complete Day 2 Java runtime diagnostics",
+                "author": "sabareeshrao",
+                "date": "2026-09-11"
+              },
+              {
+                "hash": "9fc9007574bbebcc136ee00ae097d5e869743760",
+                "message": "ATS-Y1-001 Add Day 1 runnable application and question tracking",
+                "author": "sabareeshrao",
+                "date": "2026-09-11"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "path": "chapters/01-y1-day-001.json"
+    },
+    {
+      "id": "chapter-02",
+      "path": "chapters/02-y1-day-002.json"
+    },
+    {
+      "id": "chapter-03",
+      "path": "chapters/03-y1-day-003.json"
+    },
+    {
+      "id": "chapter-04",
+      "path": "chapters/04-y1-day-004.json"
+    },
+    {
+      "id": "chapter-05",
+      "path": "chapters/05-y1-day-005.json"
+    },
+    {
+      "id": "chapter-06",
+      "path": "chapters/06-y1-day-006.json"
+    }
+  ]
+}

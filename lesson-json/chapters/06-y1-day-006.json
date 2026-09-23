@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "id": "chapter-06",
+  "title": "Day 6 / 500 — ATS-Y1-006 Enforce Survey Import Exit Codes",
+  "subtitle": "Give scheduled survey-import execution a predictable process-level success/failure contract.",
+  "steps": [
+    {
+      "title": "Day 6.1 Verify Day 5 remote state",
+      "why": "Start from the completed SurveyProject reference-semantics commit rather than rebuilding previous work.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "324878b5c61fcf4331a8621161e3cbc193762991"
+        }
+      }
+    },
+    {
+      "title": "Day 6.2 Add named application exit codes",
+      "why": "Define stable named process outcomes for success, missing input, and invalid numeric input.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/ApplicationExitCodes.java",
+          "content": "package com.ats.geospatial;\n\npublic final class ApplicationExitCodes {\n    public static final int SUCCESS = 0;\n    public static final int MISSING_REQUIRED_ARGUMENT = 2;\n    public static final int INVALID_RECORD_COUNT = 3;\n\n    private ApplicationExitCodes() {}\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 6.3 Reject missing survey-import record count",
+      "why": "Validate required batch input at the top-level process boundary and terminate with the missing-argument exit code.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        RuntimeEnvironmentReport.print();\n\n        System.out.println(\"Startup argument count: \" + args.length);\n        if (args.length > 0) {\n            System.out.println(\"Startup mode: \" + args[0]);\n        }\n\n        boolean surveyImportMode = args.length > 0 && \"survey-import\".equals(args[0]);\n        if (surveyImportMode && args.length < 2) {\n            System.err.println(\"Startup validation failed: survey-import requires an estimated record count.\");\n            System.exit(ApplicationExitCodes.MISSING_REQUIRED_ARGUMENT);\n            return;\n        }\n\n        if (surveyImportMode) {\n            int estimatedRecords;\n            try {\n                estimatedRecords = SurveyProjectIntakeParser.parseEstimatedRecords(args[1]);\n            } catch (NumberFormatException exception) {\n                System.err.println(\"Startup validation failed: estimated record count must be a whole number.\");\n                System.exit(ApplicationExitCodes.INVALID_RECORD_COUNT);\n                return;\n            }\n\n            SurveyProject project = new SurveyProject(\"ATS-SURVEY-001\", estimatedRecords);\n            SurveyProjectReferenceService.addEstimatedRecords(project, 500);\n            SurveyProjectReferenceService.tryReplaceProject(project);\n            System.out.println(\"Caller project after local replacement attempt: \" + project.getProjectCode());\n        }\n\n        System.out.println(startupStatus);\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 6.4 Convert NumberFormatException into controlled exit status",
+      "why": "Catch invalid record-count parsing and translate it into a predictable process exit code instead of leaking the raw failure.",
+      "software": "eclipse",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java"
+        }
+      }
+    },
+    {
+      "title": "Day 6.5 Preserve natural exit 0 on successful startup",
+      "why": "Allow valid execution to finish main() naturally rather than scattering System.exit(0) through the application.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        RuntimeEnvironmentReport.print();\n\n        System.out.println(\"Startup argument count: \" + args.length);\n        if (args.length > 0) {\n            System.out.println(\"Startup mode: \" + args[0]);\n        }\n\n        boolean surveyImportMode = args.length > 0 && \"survey-import\".equals(args[0]);\n        if (surveyImportMode && args.length < 2) {\n            System.err.println(\"Startup validation failed: survey-import requires an estimated record count.\");\n            System.exit(ApplicationExitCodes.MISSING_REQUIRED_ARGUMENT);\n            return;\n        }\n\n        if (surveyImportMode) {\n            int estimatedRecords;\n            try {\n                estimatedRecords = SurveyProjectIntakeParser.parseEstimatedRecords(args[1]);\n            } catch (NumberFormatException exception) {\n                System.err.println(\"Startup validation failed: estimated record count must be a whole number.\");\n                System.exit(ApplicationExitCodes.INVALID_RECORD_COUNT);\n                return;\n            }\n\n            SurveyProject project = new SurveyProject(\"ATS-SURVEY-001\", estimatedRecords);\n            SurveyProjectReferenceService.addEstimatedRecords(project, 500);\n            SurveyProjectReferenceService.tryReplaceProject(project);\n            System.out.println(\"Caller project after local replacement attempt: \" + project.getProjectCode());\n        }\n\n        System.out.println(startupStatus);\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 6.6 Execute valid/missing/invalid/plain startup tests",
+      "why": "Exercise all four process paths and verify their outputs and exit statuses from the shell.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "run Day 6 exit-code test matrix",
+          "output": "survey-import 12500 -> exit 0\\nsurvey-import -> exit 2\\nsurvey-import abc -> exit 3\\nplain startup -> exit 0",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 6.7 Verify Java 8 bytecode",
+      "why": "Confirm ApplicationExitCodes and the application still compile to Java 8 class-file version 52.",
+      "software": "eclipse",
+      "action": {
+        "action": "showBytecode",
+        "data": {
+          "output": "ApplicationExitCodes.class\\nmajor version: 52\\nGeospatialOperationsApplication.class\\nmajor version: 52"
+        }
+      }
+    },
+    {
+      "title": "Day 6.8 Record Agile-style project methodology",
+      "why": "Ground the methodology answer in the repository's actual ticket → implementation → QA → commit → handoff workflow.",
+      "software": "github",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "docs/development-journal/Y1-D006.md"
+        }
+      }
+    },
+    {
+      "title": "Day 6.9 Update question coverage",
+      "why": "Record System.exit and project-methodology primary coverage without duplicating older main-method questions.",
+      "software": "github",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "QUESTION_PROGRESS.md"
+        }
+      }
+    },
+    {
+      "title": "Day 6.10 Push and verify remote handoff",
+      "why": "Finish the existing course state at the current verified Day 6 remote commit.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "9fde1e1b71746ea2d403a48bd2a19c6baca0722c"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "id": "chapter-03",
+  "title": "Day 3 / 500 — ATS-Y1-003 Verify the Java main() Launcher Contract",
+  "subtitle": "Use a real survey-import launch mode to investigate main-method behavior.",
+  "steps": [
+    {
+      "title": "Day 3.1 Verify Day 2 remote SHA and existing source",
+      "why": "Confirm the runtime-diagnostics build is the starting point for the launcher-contract work.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "fd082db7a09460c3dbb78ede34d8ccb2da387d53"
+        }
+      }
+    },
+    {
+      "title": "Day 3.2 Read startup mode from String[] args",
+      "why": "Give String[] args a real use by accepting the survey-import startup mode from the command line.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "package com.ats.geospatial;\n\npublic class GeospatialOperationsApplication {\n    public static void main(String[] args) {\n        String applicationName = \"Geospatial Operations Tracking System\";\n        String startupStatus = \"Application started successfully.\";\n        System.out.println(applicationName);\n        RuntimeEnvironmentReport.print();\n        System.out.println(\"Startup argument count: \" + args.length);\n        if (args.length > 0) {\n            System.out.println(\"Startup mode: \" + args[0]);\n        }\n        System.out.println(startupStatus);\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 3.3 Add a controlled main-method contract probe",
+      "why": "Create a separate probe so launcher experiments do not damage the production application class.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/MainMethodContractProbe.java",
+          "content": "package com.ats.geospatial;\n\npublic class MainMethodContractProbe {\n    public static void main(String[] args) {\n        System.out.println(\"launcher-selected main(String[])\");\n        main(\"manual-overload-call\");\n    }\n\n    public static void main(String label) {\n        System.out.println(\"overloaded main(String): \" + label);\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 3.4 Prove the launcher selects main(String[])",
+      "why": "Run the probe and observe that Java selects the String[] signature as the launch entry point.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "java -cp out com.ats.geospatial.MainMethodContractProbe",
+          "output": "launcher-selected main(String[])\\noverloaded main(String): manual-overload-call",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 3.5 Prove main() can be overloaded but overload is manual",
+      "why": "Use the probe output to show that the overloaded main(String) executes only because main(String[]) calls it explicitly.",
+      "software": "eclipse",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "src/com/ats/geospatial/MainMethodContractProbe.java"
+        }
+      }
+    },
+    {
+      "title": "Day 3.6 Reproduce non-static and non-public launcher failures",
+      "why": "Use controlled broken launcher experiments to observe why the standard main method must be public and static.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "java -cp out MainWithoutStatic",
+          "output": "Error: Main method is not static in class MainWithoutStatic",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "title": "Day 3.7 Reproduce static-main @Override compiler failure",
+      "why": "Compile a probe showing that a static main method cannot override an instance method.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "javac MainOverrideProbe.java",
+          "output": "error: static methods cannot be annotated with @Override",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "title": "Day 3.8 Inspect Java 8 class version and method signatures",
+      "why": "Use javap to confirm class-file version 52 and inspect both legal main overload signatures.",
+      "software": "eclipse",
+      "action": {
+        "action": "showBytecode",
+        "data": {
+          "output": "major version: 52\\npublic static void main(java.lang.String[]);\\npublic static void main(java.lang.String);"
+        }
+      }
+    },
+    {
+      "title": "Day 3.9 Update question coverage",
+      "why": "Record the launcher-contract questions as primary coverage only once.",
+      "software": "github",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "QUESTION_PROGRESS.md"
+        }
+      }
+    },
+    {
+      "title": "Day 3.10 Commit, push, and verify remote state",
+      "why": "Use the final Day 3 commit as the only starting point for Day 4.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "fe3d9e4c7bdf75ef0e04aea2f462c77d9a98accd"
+        }
+      }
+    }
+  ]
+}

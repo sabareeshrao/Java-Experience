@@ -1,0 +1,78 @@
+name: Deploy Java Experience Simulator
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lesson-json/**"
+      - "lessons.js"
+      - "scripts/**"
+      - "SIMULATOR_PIN.json"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Java Experience
+        uses: actions/checkout@v4
+
+      - name: Checkout pinned master simulator
+        uses: actions/checkout@v4
+        with:
+          repository: sabareeshrao/Experiment-VS-Code
+          ref: 3de3c0db8c3f34abd939402dafec22036ac58292
+          path: _master-simulator
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build project lessons
+        run: node scripts/build-lessons.cjs
+
+      - name: Verify generated lesson output
+        run: node scripts/build-lessons.cjs --check
+
+      - name: Assemble same-origin Pages site
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp _master-simulator/player.html _site/index.html
+          cp _master-simulator/player.html _site/player.html
+          cp _master-simulator/styles.css _site/styles.css
+          cp _master-simulator/app.js _site/app.js
+          cp lessons.js _site/lessons.js
+          cp -R _master-simulator/simulator _site/simulator
+          mkdir -p _site/project-data
+          for n in 01 02 03 04 05 06 07 08; do printf "// Java-Experience project package is lesson-driven.\n" > "_site/project-data/part-$n.js"; done
+          printf "// Full-code snapshot intentionally disabled until Java-Experience adds its project snapshot builder.\n" > _site/project-data/index.js
+          printf "\n/* Java-Experience project overrides */\n#fullCodeBtn,.library-link{display:none!important}\n" >> _site/styles.css
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

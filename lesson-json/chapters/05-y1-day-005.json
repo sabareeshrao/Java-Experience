@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "chapter-05",
+  "title": "Day 5 / 500 — ATS-Y1-005 Introduce SurveyProject Object and Reference Semantics",
+  "subtitle": "Turn disconnected intake values into the first real project-domain object.",
+  "steps": [
+    {
+      "title": "Day 5.1 Verify Day 4 remote state",
+      "why": "Start from the normalized intake build so the new object model grows from working code.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "da17e2ceed98d55c2f88cab04c97631efe48ba9b"
+        }
+      }
+    },
+    {
+      "title": "Day 5.2 Create first SurveyProject domain object",
+      "why": "Keep project code and estimated-record count together in one domain object.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProject.java",
+          "content": "package com.ats.geospatial;\n\npublic class SurveyProject {\n    private String projectCode;\n    private int estimatedRecords;\n\n    public SurveyProject(String projectCode, int estimatedRecords) {\n        this.projectCode = projectCode;\n        this.estimatedRecords = estimatedRecords;\n    }\n\n    public String getProjectCode() { return projectCode; }\n    public int getEstimatedRecords() { return estimatedRecords; }\n    public void setEstimatedRecords(int estimatedRecords) { this.estimatedRecords = estimatedRecords; }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 5.3 Add reference-semantics service",
+      "why": "Create a small service where object-reference behavior can be exercised through real project operations.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectReferenceService {\\n    private SurveyProjectReferenceService() {}\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 5.4 Mutate object through copied reference",
+      "why": "Show that a copied Java reference still reaches the same SurveyProject object and can mutate its state.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectReferenceService {\\n    private SurveyProjectReferenceService() {}\\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\\n    }\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 5.5 Prove parameter reassignment does not replace caller reference",
+      "why": "Reassign only the local parameter and observe that the caller continues referencing the original SurveyProject.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java",
+          "content": "package com.ats.geospatial;\n\npublic final class SurveyProjectReferenceService {\n    private SurveyProjectReferenceService() {}\n\n    public static void addEstimatedRecords(SurveyProject project, int additionalRecords) {\n        project.setEstimatedRecords(project.getEstimatedRecords() + additionalRecords);\n    }\n\n    public static void tryReplaceProject(SurveyProject project) {\n        project = new SurveyProject(\"LOCAL-REPLACEMENT\", 0);\n        System.out.println(\"Inside replacement project: \" + project.getProjectCode());\n    }\n\n    public static SurveyProject requireSurveyProject(Object candidate) {\n        if (!(candidate instanceof SurveyProject)) {\n            throw new IllegalArgumentException(\"Expected SurveyProject\");\n        }\n        return (SurveyProject) candidate;\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 5.6 Guard generic intake with instanceof",
+      "why": "Check an Object before narrowing it to SurveyProject so an invalid candidate is rejected deliberately.",
+      "software": "eclipse",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectReferenceService.java"
+        }
+      }
+    },
+    {
+      "title": "Day 5.7 Integrate SurveyProject into existing application",
+      "why": "Create the project object from normalized intake and exercise mutation and local-reference replacement in the running application.",
+      "software": "eclipse",
+      "action": {
+        "action": "appendFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "\\n// Day 5 integration: create SurveyProject and exercise SurveyProjectReferenceService.\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 5.8 Reproduce invalid cast and ClassCastException",
+      "why": "Run an intentionally invalid Object-to-SurveyProject cast to see the runtime exception that instanceof is protecting against.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "java InvalidCastProbe",
+          "output": "java.lang.ClassCastException: java.lang.String cannot be cast to com.ats.geospatial.SurveyProject",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "title": "Day 5.9 Compile/run and verify Java 8 bytecode",
+      "why": "Execute the real reference-semantics flow and retain Java 8 compatibility.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "javac --release 8 -d out src/com/ats/geospatial/*.java; java -cp out com.ats.geospatial.GeospatialOperationsApplication survey-import 12500",
+          "output": "Project code: ATS-SURVEY-001\\nRecords before shared-reference update: 12500\\nRecords after shared-reference update: 13000\\nInside replacement project: LOCAL-REPLACEMENT\\nCaller project after local replacement attempt: ATS-SURVEY-001\\nmajor version: 52",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 5.10 Update coverage, push, and verify",
+      "why": "Close the object-reference day at the exact commit Day 6 will inherit.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "324878b5c61fcf4331a8621161e3cbc193762991"
+        }
+      }
+    }
+  ]
+}

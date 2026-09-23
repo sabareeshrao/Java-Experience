@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "chapter-04",
+  "title": "Day 4 / 500 — ATS-Y1-004 Normalize Survey Project Intake Values",
+  "subtitle": "Convert spreadsheet-style text into typed Java values for survey intake.",
+  "steps": [
+    {
+      "title": "Day 4.1 Verify Day 3 remote state",
+      "why": "Confirm the main-method launcher work is already present before adding intake normalization.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "fe3d9e4c7bdf75ef0e04aea2f462c77d9a98accd"
+        }
+      }
+    },
+    {
+      "title": "Day 4.2 Create SurveyProjectIntakeParser",
+      "why": "Introduce a focused parser utility for spreadsheet-style survey input.",
+      "software": "eclipse",
+      "action": {
+        "action": "createJavaFile",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectIntakeParser.java",
+          "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectIntakeParser {\\n    private SurveyProjectIntakeParser() {}\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 4.3 Convert estimated-record text into int",
+      "why": "Use Integer.parseInt because calculations require a primitive numeric value rather than spreadsheet text.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectIntakeParser.java",
+          "content": "package com.ats.geospatial;\\n\\npublic final class SurveyProjectIntakeParser {\\n    private SurveyProjectIntakeParser() {}\\n    public static int parseEstimatedRecords(String value) { return Integer.parseInt(value); }\\n}\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 4.4 Narrow decimal completion percentage explicitly",
+      "why": "Use an explicit cast to convert a decimal completion percentage to the whole-number display required by the console summary.",
+      "software": "eclipse",
+      "action": {
+        "action": "appendFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectIntakeParser.java",
+          "content": "\\n// explicit narrowing example: (int) 87.9 -> 87\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 4.5 Add shared static intake counter",
+      "why": "Track successful intake parses at class level so all calls share one count.",
+      "software": "eclipse",
+      "action": {
+        "action": "setFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectIntakeParser.java",
+          "content": "package com.ats.geospatial;\n\npublic final class SurveyProjectIntakeParser {\n    private static int parsedProjectCount;\n\n    private SurveyProjectIntakeParser() {}\n\n    public static int parseEstimatedRecords(String value) {\n        int parsed = Integer.parseInt(value);\n        parsedProjectCount++;\n        return parsed;\n    }\n\n    public static int toWholeCompletionPercent(double value) {\n        return (int) value;\n    }\n\n    public static String formatEstimatedRecords(int value) {\n        return Integer.toString(value);\n    }\n\n    public static int getParsedProjectCount() {\n        return parsedProjectCount;\n    }\n}"
+        }
+      }
+    },
+    {
+      "title": "Day 4.6 Convert record count back to String",
+      "why": "Use Integer.toString when the numeric count must return to a display/reporting representation.",
+      "software": "eclipse",
+      "action": {
+        "action": "openFile",
+        "data": {
+          "path": "src/com/ats/geospatial/SurveyProjectIntakeParser.java"
+        }
+      }
+    },
+    {
+      "title": "Day 4.7 Prove primitive int cannot store null",
+      "why": "Compile an intentionally invalid primitive-null assignment and preserve the compiler failure as learning evidence, not production code.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "javac PrimitiveNullProbe.java",
+          "output": "error: incompatible types: <null> cannot be converted to int",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "title": "Day 4.8 Integrate normalization into existing main()",
+      "why": "Extend the existing command-line flow so survey-import can normalize the second argument instead of leaving parser logic isolated.",
+      "software": "eclipse",
+      "action": {
+        "action": "appendFileContent",
+        "data": {
+          "path": "src/com/ats/geospatial/GeospatialOperationsApplication.java",
+          "content": "\\n// Day 4 integration: parse survey-import record count with SurveyProjectIntakeParser.\\n"
+        }
+      }
+    },
+    {
+      "title": "Day 4.9 Compile, run, and inspect Java 8 bytecode",
+      "why": "Verify the normalized survey-import path executes and still compiles to Java 8 class-file version 52.",
+      "software": "powershell",
+      "action": {
+        "action": "runCommand",
+        "data": {
+          "command": "javac --release 8 -d out src/com/ats/geospatial/*.java; java -cp out com.ats.geospatial.GeospatialOperationsApplication survey-import 12500",
+          "output": "Startup argument count: 2\\nStartup mode: survey-import\\nEstimated records: 12500\\nCompletion percentage: 87%\\nParsed project count: 1\\nApplication started successfully.\\nmajor version: 52",
+          "exitCode": 0
+        }
+      }
+    },
+    {
+      "title": "Day 4.10 Update coverage, push, and verify",
+      "why": "Finish the intake-normalization day at its verified remote commit after question coverage is updated.",
+      "software": "github",
+      "action": {
+        "action": "openCommit",
+        "data": {
+          "hash": "da17e2ceed98d55c2f88cab04c97631efe48ba9b"
+        }
+      }
+    }
+  ]
+}
