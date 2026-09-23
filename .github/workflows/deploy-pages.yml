@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: sabareeshrao/Experiment-VS-Code
-          ref: 3de3c0db8c3f34abd939402dafec22036ac58292
+          ref: 1a4fec778aa6f84b899de66bcf064958e4578f41
           path: _master-simulator
 
       - name: Use Node.js 20
